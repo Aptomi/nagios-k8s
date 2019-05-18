@@ -47,11 +47,10 @@ RUN make install-config
 RUN make install-commandmode
 RUN make clean
 
-#RUN wget http://mathias-kettner.com/download/mk-livestatus-${LIVESTATUS_VERSION}.tar.gz
-#RUN tar xvf /tmp/mk-livestatus-${LIVESTATUS_VERSION}.tar.gz -C /tmp
 RUN git clone --single-branch --branch ${LIVESTATUS_VERSION} https://github.com/tribe29/checkmk/ /tmp/checkmk
 WORKDIR /tmp/checkmk/livestatus
 RUN autoheader &&  aclocal && automake --add-missing  && autoconf
+# LOL
 RUN autoheader &&  aclocal && automake --add-missing  && autoconf
 
 RUN ./configure --with-nagios4
@@ -77,8 +76,11 @@ COPY --from=builder /usr/local/lib/mk-livestatus/livestatus.o /usr/local/lib/mk-
 COPY --from=builder /usr/local/lib/mod_gearman/mod_gearman_nagios4.o /usr/local/lib/mod_gearman/mod_gearman_nagios4.o
 
 # XXX copy from build container
-RUN apt-get update && apt install -y libltdl-dev
+RUN apt-get update && apt install -y libltdl-dev \
+      libgearman-dev && \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*
 
-
+RUN mkdir /opt/nagios/etc/conf.d
 RUN chown -R ${NAGIOS_USER}:${NAGIOS_GROUP} ${NAGIOS_HOME}
-ENTRYPOINT ["sh", "-c", "/opt/nagios/bin/nagios /opt/nagios/etc/nagios.cfg"]
+ENTRYPOINT [ "su", "-", "nagios", "-c", "/opt/nagios/bin/nagios /opt/nagios/etc/nagios.cfg" ]
