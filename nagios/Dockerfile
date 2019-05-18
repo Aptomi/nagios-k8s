@@ -29,7 +29,7 @@ RUN ( id -u $NAGIOS_USER    || useradd --system -d $NAGIOS_HOME -g $NAGIOS_GROUP
 
 
 WORKDIR /tmp/
-RUN wget https://github.com/NagiosEnterprises/nagioscore/archive/nagios-4.1.0.tar.gz
+RUN wget https://github.com/NagiosEnterprises/nagioscore/archive/nagios-${NAGIOS_VERSION}.tar.gz
 RUN tar zxvf nagios-${NAGIOS_VERSION}.tar.gz
 WORKDIR /tmp/nagioscore-nagios-${NAGIOS_VERSION}
 
