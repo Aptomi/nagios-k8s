@@ -33,6 +33,8 @@ services:
       context: ./thruk
     networks:
       - net
+   depends_on:
+    - nginx  -
 
 
 networks:
