@@ -10,6 +10,15 @@ services:
     networks:
       - net
 
+  nginx:
+    image: nginx:latest
+    volumes:
+      - type: bind
+        source: ./nginx/data/nginx.conf
+        target: /etc/nginx/nginx.conf
+    depends_on:
+      - gearmand
+
   nagios:
     container_name: nagios
     build:
