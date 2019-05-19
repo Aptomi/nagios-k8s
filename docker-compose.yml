@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   gearmand:
+    image: aptomisvc/monitoring-gearmand
     container_name: gearmand
     build:
       context: ./gearmand
@@ -11,8 +12,8 @@ services:
       - net
 
   nginx:
+    image: aptomisvc/monitoring-nginx
     container_name: nginx
-    image: nginx:latest
     build:
       context: ./nginx
     volumes:
@@ -29,6 +30,7 @@ services:
       - "livestatus_sock:/opt/nagios/var/rw"
 
   nagios:
+    image: aptomisvc/monitoring-nagios
     container_name: nagios
     build:
       context: ./nagios
@@ -39,21 +41,19 @@ services:
     volumes:
       - "livestatus_sock:/opt/nagios/var/rw"
   thruk:
+    image: aptomisvc/monitoring-thruk
     container_name: thruk
     ports:
       - 0.0.0.0:8081:80
     build:
       context: ./thruk
-#    volumes:
-#      - type: bind
-#        source: ./thruk/data/thruk_local.conf
-#        target: /etc/thruk/thruk_local.conf
     networks:
       - net
     depends_on:
       - nginx
 
   worker1:
+    image: aptomisvc/monitoring-worker
     container_name: worker1
     build:
       context: ./gearman-worker
