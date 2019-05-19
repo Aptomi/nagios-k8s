@@ -16,6 +16,8 @@ services:
       context: ./nagios
     networks:
       - net
+    depends_on:
+      - gearmand
   thruk:
     container_name: thruk
     build:
