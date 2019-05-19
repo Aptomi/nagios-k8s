@@ -11,11 +11,16 @@ services:
       - net
 
   nginx:
+    container_name: nginx
     image: nginx:latest
+    build:
+      context: ./nginx
     volumes:
       - type: bind
         source: ./nginx/data/nginx.conf
         target: /etc/nginx/nginx.conf
+    networks:
+      - net
     ports:
       - 6557:6557
     depends_on:
@@ -35,6 +40,8 @@ services:
       - "livestatus_sock:/opt/nagios/var/rw"
   thruk:
     container_name: thruk
+    ports:
+      - 0.0.0.0:8081:80
     build:
       context: ./thruk
     networks:
