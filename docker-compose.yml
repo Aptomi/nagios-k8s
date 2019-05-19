@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  gearmand:
+    container_name: gearmand
+    build:
+      context: ./gearmand
+    ports:
+      - 4730:4730
+    networks:
+      - net
+
+  nagios:
+    container_name: nagios
+    build:
+      context: ./nagios
+    networks:
+      - net
+  thruk:
+    container_name: thruk
+    build:
+      context: ./thruk
+    networks:
+      - net
+
+
+networks:
+  net:
