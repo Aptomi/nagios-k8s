@@ -83,4 +83,6 @@ RUN apt-get update && apt install -y libltdl-dev \
 
 RUN mkdir /opt/nagios/etc/conf.d
 RUN chown -R ${NAGIOS_USER}:${NAGIOS_GROUP} ${NAGIOS_HOME}
+ADD data/module.conf /etc/mod-gearman/module.conf
+ADD data/nagios.cfg /opt/nagios/etc/nagios.cfg
 ENTRYPOINT [ "su", "-", "nagios", "-c", "/opt/nagios/bin/nagios /opt/nagios/etc/nagios.cfg" ]
