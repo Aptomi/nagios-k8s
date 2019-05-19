@@ -1,6 +1,6 @@
 FROM ubuntu:bionic as builder
 
-ARG NAGIOS_VERSION=4.1.0
+ARG NAGIOS_VERSION=4.4.3
 ARG LIVESTATUS_VERSION=1.2.8
 ARG MOD_GEARMAN_COMMIT=d9d01c7626e3ac23b323d4e2ac5a79f1f3e6968a
 
@@ -61,7 +61,7 @@ RUN make install
 WORKDIR /tmp
 RUN git clone https://github.com/sni/mod_gearman
 WORKDIR /tmp/mod_gearman
-RUN git checkout ${MOD_GEARMAN_COMMIT}
+#RUN git checkout ${MOD_GEARMAN_COMMIT}
 RUN ./autogen.sh
 RUN ./configure --disable-nagios3-neb-module --enable-nagios4-neb-module --disable-naemon-neb-module
 RUN make install
