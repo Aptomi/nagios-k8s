@@ -18,4 +18,5 @@ RUN a2enmod ldap
 RUN a2enmod authnz_ldap
 #ADD htpasswd /etc/thruk/htpasswd
 ADD entrypoint.sh /usr/local/bin/entrypoint.sh
+ADD data/thruk_local.conf /etc/thruk/thruk_local.conf
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

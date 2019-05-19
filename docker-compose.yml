@@ -44,6 +44,10 @@ services:
       - 0.0.0.0:8081:80
     build:
       context: ./thruk
+#    volumes:
+#      - type: bind
+#        source: ./thruk/data/thruk_local.conf
+#        target: /etc/thruk/thruk_local.conf
     networks:
       - net
     depends_on:
