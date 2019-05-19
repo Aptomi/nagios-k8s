@@ -53,6 +53,15 @@ services:
     depends_on:
       - nginx
 
+  worker1:
+    container_name: worker1
+    build:
+      context: ./gearman-worker
+    depends_on:
+      - gearmand
+    networks:
+      - net
+
 volumes:
   livestatus_sock:
 
