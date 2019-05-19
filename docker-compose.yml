@@ -16,8 +16,12 @@ services:
       - type: bind
         source: ./nginx/data/nginx.conf
         target: /etc/nginx/nginx.conf
+    ports:
+      - 6557:6557
     depends_on:
       - gearmand
+    volumes:
+      - "livestatus_sock:/opt/nagios/var/rw"
 
   nagios:
     container_name: nagios
@@ -27,15 +31,19 @@ services:
       - net
     depends_on:
       - gearmand
+    volumes:
+      - "livestatus_sock:/opt/nagios/var/rw"
   thruk:
     container_name: thruk
     build:
       context: ./thruk
     networks:
       - net
-   depends_on:
-    - nginx  -
+    depends_on:
+      - nginx
 
+volumes:
+  livestatus_sock:
 
 networks:
   net:
