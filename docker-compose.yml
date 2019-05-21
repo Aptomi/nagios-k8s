@@ -4,6 +4,9 @@ services:
   gearmand:
     image: aptomisvc/monitoring-gearmand
     container_name: gearmand
+    environment:
+      GEARMAN_PORT: 4730
+      GEARMAN_KEY: gearmanK3y42
     build:
       context: ./gearmand
     ports:
@@ -34,6 +37,10 @@ services:
     container_name: nagios
     build:
       context: ./nagios
+    environment:
+      GEARMAN_HOST: "gearmand"
+      GEARMAN_PORT: 4730
+      GEARMAN_KEY: gearmanK3y42
     networks:
       - net
     depends_on:
@@ -55,6 +62,10 @@ services:
   worker1:
     image: aptomisvc/monitoring-worker
     container_name: worker1
+    environment:
+      GEARMAN_HOST: "gearmand"
+      GEARMAN_PORT: 4730
+      GEARMAN_KEY: gearmanK3y42
     build:
       context: ./gearman-worker
     depends_on:

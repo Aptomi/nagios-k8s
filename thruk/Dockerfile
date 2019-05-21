@@ -1,6 +1,7 @@
 #FROM ubuntu:xenial
 FROM ubuntu:bionic
 RUN apt-get update && apt install -y \
+  gettext                            \
 	gpg
 RUN  gpg --keyserver ipv4.pool.sks-keyservers.net --recv-keys F8C1CA08A57B9ED7 && gpg --armor --export F8C1CA08A57B9ED7 | apt-key add -
 #RUN echo "deb http://labs.consol.de/repo/stable/ubuntu xenial main" > /etc/apt/sources.list.d/labs-consol-stable.list

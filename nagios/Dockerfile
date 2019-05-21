@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y  \
     pkg-config                            \
     libgearman-dev                        \
     git                                   \
+    gettext                               \
     autoconf2.64                          \
     unzip
 
@@ -76,8 +77,9 @@ COPY --from=builder /usr/local/lib/mk-livestatus/livestatus.o /usr/local/lib/mk-
 COPY --from=builder /usr/local/lib/mod_gearman/mod_gearman_nagios4.o /usr/local/lib/mod_gearman/mod_gearman_nagios4.o
 
 # XXX copy from build container
-RUN apt-get update && apt install -y libltdl-dev \
-      libgearman-dev && \
+RUN apt-get update && apt install -y libltdl-dev  \
+      gettext                                     \
+      libgearman-dev &&                           \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
@@ -86,4 +88,5 @@ RUN chown -R ${NAGIOS_USER}:${NAGIOS_GROUP} ${NAGIOS_HOME}
 ADD data/module.conf /etc/mod-gearman/module.conf
 ADD data/nagios.cfg /opt/nagios/etc/nagios.cfg
 ADD data/resource.cfg /opt/nagios/etc/resource.cfg
-ENTRYPOINT [ "su", "-", "nagios", "-c", "/opt/nagios/bin/nagios /opt/nagios/etc/nagios.cfg" ]
+ADD entrypoint.sh /usr/local/bin/entrypoint.sh
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
