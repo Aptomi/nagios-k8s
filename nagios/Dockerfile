@@ -74,7 +74,7 @@ ENV NAGIOS_GROUP           nagios
 COPY --from=builder /opt/nagios /opt/nagios
 COPY --from=builder /etc/ /etc/
 COPY --from=builder /usr/local/lib/mk-livestatus/livestatus.o /usr/local/lib/mk-livestatus/livestatus.o
-COPY --from=builder /usr/local/lib/mod_gearman/mod_gearman_nagios4.o /usr/local/lib/mod_gearman/mod_gearman_nagios4.o
+COPY --from=builder /usr/local/lib/mod_gearman/ /usr/local/lib/mod_gearman/
 
 # XXX copy from build container
 RUN apt-get update && apt install -y libltdl-dev  \
