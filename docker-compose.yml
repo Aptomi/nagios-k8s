@@ -50,6 +50,8 @@ services:
   thruk:
     image: aptomisvc/monitoring-thruk
     container_name: thruk
+    environment:
+      THRUK_ADMIN_PASSWORD: xxx111@
     ports:
       - 0.0.0.0:8081:80
     build:
